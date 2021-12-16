@@ -1,3 +1,4 @@
+import React from "react";
 import { useCallback, useEffect, useState } from "react";
 import Modal from "./components/Modal";
 import SquareArea from "./components/SquareArea";
@@ -30,7 +31,7 @@ function App() {
   const getGameFreeSquares = useCallback(() => {
     const freeSquares = [];
     for (let i = 0; i < currentBoard.length; i++) {
-      if (!currentBoard[i]?.currentOccupant) {
+      if (!currentBoard[i].currentOccupant) {
         freeSquares.push(i);
       }
     }
@@ -40,7 +41,7 @@ function App() {
   const checkWin = useCallback(() => {
     if (!selectedType) return;
     const plays = currentBoard.reduce((ac, v, i) => {
-      return v?.currentOccupant === selectedType ? ac.concat(i) : ac;
+      return v.currentOccupant === selectedType ? ac.concat(i) : ac;
     }, []);
     let gameWon = undefined;
     for (let [index, win] of winningSequences.entries()) {
@@ -59,7 +60,7 @@ function App() {
     if (!selectedType) return;
     const housePlayer = selectedType === "O" ? "X" : "O";
     const plays = currentBoard.reduce((ac, v, i) => {
-      return v?.currentOccupant === housePlayer ? ac.concat(i) : ac;
+      return v.currentOccupant === housePlayer ? ac.concat(i) : ac;
     }, []);
     let gameWon = undefined;
     for (let [index, win] of winningSequences.entries()) {
@@ -101,7 +102,7 @@ function App() {
   };
 
   const updateBoardData = (idx: number) => {
-    if (currentBoard[idx]?.isOccupied === true) return;
+    if (currentBoard[idx].isOccupied === true) return;
 
     const updatedData = currentBoard;
     updatedData[idx] = {
@@ -129,8 +130,8 @@ function App() {
           <SquareArea
             key={`square-${idx}`}
             id={idx}
-            isOccupied={currentBoard[idx]?.isOccupied}
-            currentOccupant={currentBoard[idx]?.currentOccupant}
+            isOccupied={currentBoard[idx].isOccupied}
+            currentOccupant={currentBoard[idx].currentOccupant}
             showPlayerHover={selectedType}
             onClickHandler={updateBoardData}
           />
